@@ -1,0 +1,3 @@
+[submodule "jenkins_exporter"]
+	path = jenkins_exporter
+	url = git@github.com:abousselmi/jenkins_exporter.git
