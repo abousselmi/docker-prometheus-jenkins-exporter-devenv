@@ -57,8 +57,8 @@ services:
 
   # JENKINS PYTHON EXPORTER SERVICE
   jenkins-exporter:
-    build: ./jenkins-exporter-py
-    image: lovoo/jenkins_exporter:latest
+    build: ./jenkins_exporter
+    image: jenkins_exporter:latest
     ports:
       - '9118:9118'
     command: ["-j", "http://127.0.0.1:8080", "-p", "9118", "--user", "admin", "--password", "admin"]
