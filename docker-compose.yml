@@ -2,11 +2,9 @@ version: '3.1'
 
 volumes:
   prometheus_data: {}
+  jenkins_home: {}
   jenkins_data:
     driver: local
-
-networks:
-  back-tier:
 
 services:
 
@@ -23,8 +21,6 @@ services:
       - '--web.console.templates=/usr/share/prometheus/consoles'
     ports:
       - 9090:9090
-    networks:
-      - back-tier
     restart: always
 
   # NODE EXPORTER SERVICE
@@ -41,24 +37,30 @@ services:
       - '^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)'
     ports:
       - 9100:9100
-    networks:
-      - back-tier
-    restart: always
+    restart: on-failure:10
 
   # JENKINS SERVICE
   jenkins:
     image: "jenkins/jenkins:lts"
+    volumes:
+      - jenkins_data:/jenkins_config
+      - jenkins_home:/var/jenkins_home/:rw
     ports:
       - '8080:8080'
       - '443:8443'
       - '50000:50000'
-    volumes:
-      - 'jenkins_data:/jenkins_config'
+    restart: always
 
   # JENKINS PYTHON EXPORTER SERVICE
   jenkins-exporter:
     build: ./jenkins_exporter
     image: jenkins_exporter:latest
+    volumes:
+      - jenkins_home:/var/jenkins_home/:ro
+    command: ["-j", "http://192.168.1.14:8080", "-p", "9200", "--user", "admin"]
     ports:
-      - '9118:9118'
-    command: ["-j", "http://127.0.0.1:8080", "-p", "9118", "--user", "admin", "--password", "admin"]
+      - '9200:9200'
+    depends_on:
+      - 'jenkins'
+    restart: on-failure:10
+
