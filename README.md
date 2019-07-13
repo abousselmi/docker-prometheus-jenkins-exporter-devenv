@@ -8,7 +8,10 @@ Clone the project and its submodule:
 
 ```console
 git clone --recursive git@github.com:abousselmi/docker-prometheus-jenkins-exporter-devenv.git
-#or
+```
+or
+
+```console
 git clone --recursive https://github.com/abousselmi/docker-prometheus-jenkins-exporter-devenv.git
 ```
 
@@ -23,6 +26,14 @@ Then fire it up:
 ```console
 docker-compose up
 ```
+or
+
+```console
+docker-compose up -d
+```
+
+Please note that the jenkins exporter container may restart multiple times. It's normal because
+it is looking for the jenkins API that take few seconds to start up.
 
 # Original projects:
 
