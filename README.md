@@ -4,6 +4,14 @@ Simple docker compose infrastructure/development environment for the golang trai
 
 # Usage
 
+Clone the project and its submodule:
+
+```console
+git clone --recursive git@github.com:abousselmi/docker-prometheus-jenkins-exporter-devenv.git
+#or
+git clone --recursive https://github.com/abousselmi/docker-prometheus-jenkins-exporter-devenv.git
+```
+
 Build the jenkins-exporter docker image:
 
 ```console
