@@ -32,9 +32,6 @@ or
 docker-compose up -d
 ```
 
-Please note that the jenkins exporter container may restart multiple times. It's normal because
-it is looking for the jenkins API that take few seconds to start up.
-
 # Original projects:
 
   * Prometheus docker suite: https://github.com/vegasbrianc/prometheus
